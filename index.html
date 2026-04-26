@@ -51,24 +51,25 @@
             margin: 0;
             box-sizing: border-box;
             position: relative;
-            padding-bottom: 100px;
+            padding-bottom: 120px; /* Увеличили отступ для нижних элементов */
         }
 
-        /* --- Заголовок --- */
+        /* --- Заголовок (Теперь всегда по центру) --- */
         .header-container {
             display: flex;
+            flex-direction: column; /* Элементы друг под другом для лучшего центра */
             align-items: center;
             margin-top: 40px;
             margin-bottom: 40px;
-            align-self: flex-start;
+            text-align: center;
             animation: fadeInDown 0.8s ease-out forwards;
         }
 
         .header-container img {
-            width: 50px;
-            height: 50px;
-            margin-right: 15px;
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px; /* Отступ снизу вместо правого */
+            border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
@@ -87,10 +88,9 @@
             margin-top: 30px;
             margin-bottom: 15px;
             color: rgba(255, 255, 255, 0.9);
-            border-left: 3px solid #f1c40f;
-            padding-left: 10px;
-            width: 100%;
-            max-width: 600px;
+            border-bottom: 2px solid #f1c40f; /* Линия снизу для симметрии по центру */
+            padding-bottom: 8px;
+            width: fit-content;
             opacity: 0;
             animation: fadeInUp 0.6s ease-out 0.3s forwards;
         }
@@ -113,7 +113,7 @@
             flex-wrap: wrap;
         }
 
-        /* --- Стеклянные Кнопки (Liquid Glass) --- */
+        /* --- Стеклянные Кнопки --- */
         .menu-button {
             position: relative;
             display: flex;
@@ -127,24 +127,19 @@
             font-weight: 600;
             font-size: 1.1em;
             text-align: center;
-            
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
             backdrop-filter: blur(15px) saturate(160%);
             -webkit-backdrop-filter: blur(15px) saturate(160%);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 18px;
-            
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 4px 4px rgba(255, 255, 255, 0.2);
-            
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
-
-            /* Начальное состояние для анимации появления */
             opacity: 0;
             animation: fadeInUp 0.6s ease-out forwards;
         }
 
-        /* Задержки для кнопок (эффект очереди) */
+        /* Задержки анимации */
         .btn-1 { animation-delay: 0.5s; }
         .btn-2 { animation-delay: 0.6s; }
         .btn-3 { animation-delay: 0.7s; }
@@ -193,28 +188,34 @@
             display: block;
         }
 
-        /* --- Подвал --- */
+        /* --- Нижняя часть (Ссылки и Футер) --- */
+        .bottom-section {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 20px;
+        }
+
         .legal-links {
-            margin-top: 40px;
             font-size: 13px;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 1s forwards;
+            text-align: center;
         }
-        .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; }
+        .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; margin: 0 5px; }
 
         footer {
-            margin-top: auto;
             text-align: center;
-            padding: 30px 0;
             color: rgba(255, 255, 255, 0.5);
             font-size: 12px;
         }
-        .footer-version { color: #f1c40f; opacity: 0.7; }
+        .footer-version { color: #f1c40f; opacity: 0.7; display: block; margin-top: 5px; }
 
         @media (max-width: 600px) {
             .menu-button { width: 100%; }
-            .header-container { align-self: center; margin-top: 20px; }
-            h1 { font-size: 1.6em; }
+            h1 { font-size: 1.8em; }
         }
     </style>
 </head>
@@ -227,31 +228,31 @@
 
     <div class="menu-container">
 
-        <h2>Некрупные проекты</h2>
+        <h2>Мини-проекты</h2>
         <div class="menu-row">
             <a href="https://mixqzero.github.io/case" class="menu-button btn-1">Кейс</a>
             <a href="https://mixqzero.github.io/random" class="menu-button btn-2">Рандомайзер</a>
+            <a href="https://t.me/mixqzeroaibot" class="menu-button btn-3">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
         </div>
 
         <h2>Информация и поддержка</h2>
         <div class="menu-row">
-            <a href="https://t.me/mixqzero" class="menu-button btn-3">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
-            <a href="https://t.me/mixqzerobot" class="menu-button btn-4">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
-        </div>
-        <div class="menu-row">
-            <a href="https://t.me/kqxsrZ" class="menu-button btn-5">Связаться с разработчиком</a>
+            <a href="https://t.me/mixqzero" class="menu-button btn-4">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
+            <a href="https://t.me/mixqzerobot" class="menu-button btn-5">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
         </div>
     </div>
 
-    <div class="legal-links">
-        <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> & 
-        <a href="https://mixqzero.github.io/soglasie" target="_blank">Соглашение</a>
-    </div>
+    <div class="bottom-section">
+        <div class="legal-links">
+            <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> & 
+            <a href="https://mixqzero.github.io/soglasie" target="_blank">Соглашение</a>
+        </div>
 
-    <footer>
-        <p>© 2024-2026 MixQZero. Все права защищены.</p>
-        <span class="footer-version">ver. web4Global</span>
-    </footer>
+        <footer>
+            <p>© 2024-2026 MixQZero. Все права защищены.</p>
+            <span class="footer-version">ver. web4Global</span>
+        </footer>
+    </div>
 
 </body>
 </html>
