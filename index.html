@@ -19,20 +19,20 @@
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes shine {
+            100% { left: 125%; }
+        }
 
-        /* --- Переменные --- */
         :root {
             --bg-gradient: linear-gradient(-45deg, #8e44ad, #b48a00, #6a1b9a, #c89600);
             --accent: #f1c40f;
-            /* Liquid Glass Свойства */
-            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
         body.dark-mode {
             --bg-gradient: linear-gradient(-45deg, #1a1a1a, #000000, #2c3e50, #000000);
-            --glass-bg: rgba(0, 0, 0, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass: rgba(0, 0, 0, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -45,116 +45,85 @@
             background: var(--bg-gradient);
             background-size: 400% 400%;
             animation: purpleGoldGradientShift 15s ease infinite;
-            overflow-x: hidden;
             color: #f0f0f0;
             padding: 20px;
             box-sizing: border-box;
-            transition: background 0.8s ease;
+            transition: background 0.5s ease;
         }
         body.static-bg { animation: none !important; background-size: cover; }
 
-        /* --- Уведомления и Консоль --- */
-        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 10000; }
-        .toast { background: rgba(0,0,0,0.8); color: #fff; padding: 12px 20px; border-radius: 10px; margin-top: 10px; backdrop-filter: blur(10px); border-left: 4px solid var(--accent); font-size: 14px; animation: fadeInUp 0.3s ease; }
-        #dev-console { position: fixed; top: 80px; left: 20px; width: 280px; max-height: 150px; background: rgba(0,0,0,0.8); font-family: monospace; font-size: 11px; padding: 10px; border-radius: 10px; overflow-y: auto; color: #00ff00; z-index: 999; border: 1px solid rgba(255,255,255,0.1); display: none; }
-
-        /* --- Настройки (Исправлено: теперь не выглядывают) --- */
-        .settings-trigger { position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; cursor: pointer; z-index: 1001; background: rgba(0, 0, 0, 0.3); padding: 8px 15px; border-radius: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        /* --- Настройки (ПОЛНОСТЬЮ СКРЫТЫ) --- */
+        .settings-trigger { position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; cursor: pointer; z-index: 1001; background: rgba(0, 0, 0, 0.4); padding: 8px 15px; border-radius: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         
         .settings-panel { 
-            position: fixed; 
-            top: 0; 
-            left: -325px; /* Увеличено, чтобы точно скрыть границы и тени */
-            width: 300px; 
-            height: 100%; 
-            background: rgba(0, 0, 0, 0.95); 
-            backdrop-filter: blur(25px); 
-            z-index: 1000; 
-            transition: left 0.5s cubic-bezier(0.19, 1, 0.22, 1); 
-            padding: 80px 20px 40px; 
-            display: flex; 
-            flex-direction: column; 
-            box-shadow: 10px 0 30px rgba(0,0,0,0.5); 
+            position: fixed; top: 0; left: -400px; width: 310px; height: 100%; 
+            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(20px); z-index: 1000; 
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding: 80px 25px 30px; display: flex; flex-direction: column; 
+            box-shadow: none; 
         }
-        .settings-panel.active { left: 0; }
+        .settings-panel.active { left: 0; box-shadow: 15px 0 40px rgba(0,0,0,0.6); }
 
-        .setting-item { margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px; }
-        .setting-item label { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .setting-item { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .setting-item label { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
         
-        .switch-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 12px; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: center; }
+        .switch-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 10px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
         .switch-btn.active { background: var(--accent); color: #000; font-weight: bold; border-color: var(--accent); }
         
-        select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 12px; border-radius: 12px; outline: none; }
+        select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 10px; outline: none; }
 
-        /* --- Кнопки LIQUID GLASS --- */
+        /* --- LIQUID GLASS КНОПКИ --- */
         .menu-button { 
-            position: relative; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 280px; 
-            padding: 22px; 
-            text-decoration: none; 
-            color: #fff; 
-            font-weight: 600; 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px);
+            position: relative; width: 280px; padding: 20px; margin: 10px;
+            text-decoration: none; color: #fff; font-weight: 600; 
+            background: var(--glass); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border); 
-            border-radius: 22px; 
-            box-shadow: var(--glass-shadow);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-            opacity: 0; 
+            border-radius: 18px; 
+            overflow: hidden; opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
-            overflow: hidden;
+            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-align: center;
         }
-
-        /* Блик стекла */
-        .menu-button::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: rotate(30deg);
-            transition: 0.5s;
-        }
-
-        .menu-button:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            border-color: var(--accent); 
-            background: rgba(255,255,255,0.18);
-            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-        }
-
-        /* --- Главный контент --- */
-        .header-container { display: flex; flex-direction: column; align-items: center; margin: 60px 0 40px; animation: fadeInDown 1s ease-out forwards; }
-        .header-container img { width: 70px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
-        h1 { font-size: 2.5em; font-family: 'Arial Black', sans-serif; margin: 0; }
         
-        .section-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 900px; margin-bottom: 30px; }
-        h2 { font-size: 1.1em; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); border-bottom: 2px solid rgba(241, 196, 15, 0.4); padding-bottom: 8px; margin-bottom: 25px; opacity: 0; animation: fadeInUp 0.8s ease-out 0.5s forwards; }
-        
-        .buttons-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; width: 100%; }
+        /* Эффект блика при наведении */
+        .menu-button::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+        }
+        .menu-button:hover::after { animation: shine 0.75s forwards; }
+        .menu-button:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); border-color: var(--accent); }
 
-        footer { font-size: 11px; color: rgba(255,255,255,0.3); text-align: center; margin-top: auto; padding: 20px; }
+        /* --- Юридический блок (ПОДНЯТ ВЫШЕ) --- */
+        .legal-box { margin-top: auto; padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 10px; }
+        .legal-box a { color: var(--accent); font-size: 13px; text-decoration: none; opacity: 0.8; }
+        .legal-box a:hover { opacity: 1; text-decoration: underline; }
+
+        /* --- Контент --- */
+        .header-container { text-align: center; margin: 50px 0 30px; animation: fadeInDown 1s ease; }
+        .header-container img { width: 70px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        h1 { font-size: 2.2em; margin: 10px 0; }
+        h2 { font-size: 1em; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
+        .section-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        footer { padding: 20px; font-size: 10px; color: rgba(255,255,255,0.2); }
+
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+        .toast { background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 8px; margin-top: 5px; font-size: 13px; border-left: 3px solid var(--accent); animation: fadeInUp 0.3s; }
     </style>
 </head>
 <body>
 
     <div id="toast-container"></div>
-    <div id="dev-console"></div>
 
     <div class="settings-trigger" onclick="toggleSettings()">
-        <svg style="width:20px; height:20px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        <svg style="width:18px; height:18px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
         <span data-i18n="settings">Настройки</span>
     </div>
 
     <div class="settings-panel" id="settingsPanel">
         <div class="setting-item">
-            <label data-i18n="lang-label">Язык системы</label>
+            <label data-i18n="lang-label">Язык</label>
             <select id="langSelect" onchange="changeLang(this.value)">
                 <option value="ru">Русский</option>
                 <option value="en">English</option>
@@ -163,143 +132,100 @@
         </div>
 
         <div class="setting-item">
-            <label data-i18n="theme-label">Визуальная тема</label>
+            <label data-i18n="theme-label">Тема</label>
             <div style="display: flex; gap: 5px;">
-                <button class="switch-btn active" id="lightModeBtn" onclick="setTheme('light')" style="flex:1">Light</button>
-                <button class="switch-btn" id="darkModeBtn" onclick="setTheme('dark')" style="flex:1">Dark</button>
+                <button class="switch-btn" id="lBtn" onclick="setTheme('light')" style="flex:1">Light</button>
+                <button class="switch-btn" id="dBtn" onclick="setTheme('dark')" style="flex:1">Dark</button>
             </div>
         </div>
 
         <div class="setting-item">
-            <label data-i18n="anim-label">Динамика фона</label>
+            <label data-i18n="anim-label">Фон</label>
             <div style="display: flex; gap: 5px;">
-                <button class="switch-btn active" id="animOnBtn" onclick="setAnim(true)" style="flex:1">ON</button>
-                <button class="switch-btn" id="animOffBtn" onclick="setAnim(false)" style="flex:1">OFF</button>
+                <button class="switch-btn" id="aOn" onclick="setAnim(true)" style="flex:1">ON</button>
+                <button class="switch-btn" id="aOff" onclick="setAnim(false)" style="flex:1">OFF</button>
             </div>
         </div>
 
-        <div class="setting-item">
-            <label data-i18n="dev-label">Режим разработчика</label>
-            <button class="switch-btn" id="devBtn" onclick="toggleDev()">OFF</button>
+        <div class="legal-box">
+            <a href="https://mixqzero.github.io/politika" target="_blank" data-i18n="policy">Политика конфиденциальности</a>
+            <a href="https://mixqzero.github.io/soglasie" target="_blank" data-i18n="agreement">Соглашение пользователя</a>
         </div>
-
-        <div style="margin-top: auto;">
-            <a href="https://mixqzero.github.io/politika" target="_blank" style="color:var(--accent); font-size: 13px; text-decoration: none;" data-i18n="policy">Политика конфиденциальности</a>
-        </div>
+        <footer style="padding: 10px 0;">© 2024-2026 MixQZero</footer>
     </div>
 
     <div class="header-container">
-        <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Logo">
+        <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png">
         <h1>MixQZero</h1>
     </div>
 
     <div class="section-wrapper">
         <h2 data-i18n="projects-title">Мини-проекты</h2>
-        <div class="buttons-grid">
-            <a href="https://mixqzero.github.io/case" class="menu-button" style="animation-delay: 0.2s;" data-i18n="btn-case">Кейс</a>
-            <a href="https://mixqzero.github.io/random" class="menu-button" style="animation-delay: 0.3s;" data-i18n="btn-random">Рандомайзер</a>
-            <a href="https://t.me/mixqzeroai_bot" class="menu-button" style="animation-delay: 0.4s;" data-i18n="btn-ai">ИИ от MixQZero</a>
-        </div>
+        <a href="https://mixqzero.github.io/case" class="menu-button" style="animation-delay: 0.1s;" data-i18n="btn-case">Кейс</a>
+        <a href="https://mixqzero.github.io/random" class="menu-button" style="animation-delay: 0.2s;" data-i18n="btn-random">Рандомайзер</a>
+        <a href="https://t.me/mixqzeroai_bot" class="menu-button" style="animation-delay: 0.3s;" data-i18n="btn-ai">ИИ Бот</a>
     </div>
 
     <div class="section-wrapper">
         <h2 data-i18n="info-title">Информация</h2>
-        <div class="buttons-grid">
-            <a href="https://t.me/mixqzero" class="menu-button" style="animation-delay: 0.5s;" data-i18n="btn-tg">Телеграмм канал</a>
-            <a href="https://t.me/mixqzerobot" class="menu-button" style="animation-delay: 0.6s;" data-i18n="btn-bot">Телеграмм бот</a>
-        </div>
+        <a href="https://t.me/mixqzero" class="menu-button" style="animation-delay: 0.4s;" data-i18n="btn-tg">Телеграм Канал</a>
+        <a href="https://t.me/mixqzerobot" class="menu-button" style="animation-delay: 0.5s;" data-i18n="btn-bot">Телеграм Бот</a>
     </div>
-
-    <footer>© 2024-2026 MixQZero</footer>
 
     <script>
         const i18n = {
-            ru: {
-                settings: "Настройки", "lang-label": "Язык системы", "theme-label": "Тема", "anim-label": "Анимация фона", "dev-label": "Режим разработчика", "policy": "Конфиденциальность", "projects-title": "Проекты", "info-title": "Инфо", "btn-case": "Кейс", "btn-random": "Рандомайзер", "btn-ai": "ИИ Бот", "btn-tg": "Канал", "btn-bot": "Бот", welcome: "Привет!", dev_on: "Dev: ВКЛ", dev_off: "Dev: ВЫКЛ"
-            },
-            en: {
-                settings: "Settings", "lang-label": "Language", "theme-label": "Theme", "anim-label": "Animation", "dev-label": "Dev Mode", "policy": "Privacy", "projects-title": "Projects", "info-title": "Info", "btn-case": "Case", "btn-random": "Randomizer", "btn-ai": "AI Bot", "btn-tg": "Channel", "btn-bot": "Bot", welcome: "Welcome!", dev_on: "Dev: ON", dev_off: "Dev: OFF"
-            },
-            tt: {
-                settings: "Көйләүләр", "lang-label": "Тел", "theme-label": "Төс", "anim-label": "Фон", "dev-label": "Dev режимы", "policy": "Политика", "projects-title": "Проектлар", "info-title": "Инфо", "btn-case": "Кейс", "btn-random": "Рандомайзер", "btn-ai": "ИИ Бот", "btn-tg": "Канал", "btn-bot": "Бот", welcome: "Рәхим итегез!", dev_on: "Dev: КАБЫЗЫЛДЫ", dev_off: "Dev: СҮНДЕ"
-            }
+            ru: { settings: "Настройки", "lang-label": "Язык", "theme-label": "Тема", "anim-label": "Фон", policy: "Политика конфиденциальности", agreement: "Соглашение пользователя", "projects-title": "Мини-проекты", "info-title": "Информация", "btn-case": "Кейс", "btn-random": "Рандомайзер", "btn-ai": "ИИ Бот", "btn-tg": "Телеграм Канал", "btn-bot": "Телеграм Бот" },
+            en: { settings: "Settings", "lang-label": "Language", "theme-label": "Theme", "anim-label": "Background", policy: "Privacy Policy", agreement: "User Agreement", "projects-title": "Mini-Projects", "info-title": "Information", "btn-case": "Case", "btn-random": "Randomizer", "btn-ai": "AI Bot", "btn-tg": "Telegram Channel", "btn-bot": "Telegram Bot" },
+            tt: { settings: "Көйләүләр", "lang-label": "Тел", "theme-label": "Төс", "anim-label": "Фон", policy: "Политика", agreement: "Килешү", "projects-title": "Проектлар", "info-title": "Мәгълүмат", "btn-case": "Кейс", "btn-random": "Рандомайзер", "btn-ai": "ИИ Бот", "btn-tg": "Канал", "btn-bot": "Бот" }
         };
 
-        let currentLang = 'ru';
-        let isDev = false;
+        let state = {
+            lang: localStorage.getItem('mqz_lang') || 'ru',
+            theme: localStorage.getItem('mqz_theme') || 'light',
+            anim: localStorage.getItem('mqz_anim') !== 'false'
+        };
 
-        function showToast(msg) {
-            const container = document.getElementById('toast-container');
-            const t = document.createElement('div');
-            t.className = 'toast';
-            t.innerText = msg;
-            container.appendChild(t);
-            setTimeout(() => t.remove(), 3000);
-            if(isDev) addLog(msg);
+        function showToast(text) {
+            const t = document.createElement('div'); t.className = 'toast'; t.innerText = text;
+            document.getElementById('toast-container').appendChild(t);
+            setTimeout(() => t.remove(), 2500);
         }
 
-        function addLog(msg) {
-            const consoleBox = document.getElementById('dev-console');
-            const entry = document.createElement('div');
-            entry.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
-            consoleBox.appendChild(entry);
-            consoleBox.scrollTop = consoleBox.scrollHeight;
-        }
+        function toggleSettings() { document.getElementById('settingsPanel').classList.toggle('active'); }
 
-        function toggleSettings() {
-            document.getElementById('settingsPanel').classList.toggle('active');
-        }
-
-        function setTheme(mode) {
-            if(mode === 'dark') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('darkModeBtn').classList.add('active');
-                document.getElementById('lightModeBtn').classList.remove('active');
-            } else {
-                document.body.classList.remove('dark-mode');
-                document.getElementById('lightModeBtn').classList.add('active');
-                document.getElementById('darkModeBtn').classList.remove('active');
-            }
+        function setTheme(m) {
+            state.theme = m; localStorage.setItem('mqz_theme', m);
+            document.body.classList.toggle('dark-mode', m === 'dark');
+            document.getElementById('lBtn').classList.toggle('active', m === 'light');
+            document.getElementById('dBtn').classList.toggle('active', m === 'dark');
         }
 
         function setAnim(on) {
-            if(on) {
-                document.body.classList.remove('static-bg');
-                document.getElementById('animOnBtn').classList.add('active');
-                document.getElementById('animOffBtn').classList.remove('active');
-            } else {
-                document.body.classList.add('static-bg');
-                document.getElementById('animOffBtn').classList.add('active');
-                document.getElementById('animOnBtn').classList.remove('active');
-            }
+            state.anim = on; localStorage.setItem('mqz_anim', on);
+            document.body.classList.toggle('static-bg', !on);
+            document.getElementById('aOn').classList.toggle('active', on);
+            document.getElementById('aOff').classList.toggle('active', !on);
         }
 
-        function toggleDev() {
-            isDev = !isDev;
-            document.getElementById('dev-console').style.display = isDev ? 'block' : 'none';
-            document.getElementById('devBtn').innerText = isDev ? "ON" : "OFF";
-            document.getElementById('devBtn').classList.toggle('active', isDev);
-            showToast(isDev ? i18n[currentLang].dev_on : i18n[currentLang].dev_off);
-        }
-
-        function changeLang(v) {
-            currentLang = v;
+        function changeLang(l) {
+            state.lang = l; localStorage.setItem('mqz_lang', l);
             document.querySelectorAll('[data-i18n]').forEach(el => {
-                el.innerText = i18n[v][el.getAttribute('data-i18n')];
+                el.innerText = i18n[l][el.getAttribute('data-i18n')];
             });
+            document.getElementById('langSelect').value = l;
         }
 
-        // Закрытие по клику вне панели
-        document.addEventListener('click', (e) => {
-            const panel = document.getElementById('settingsPanel');
-            const trigger = document.querySelector('.settings-trigger');
-            if (!panel.contains(e.target) && !trigger.contains(e.target) && panel.classList.contains('active')) {
-                panel.classList.remove('active');
-            }
+        // Клик вне панели
+        document.addEventListener('click', e => {
+            const p = document.getElementById('settingsPanel');
+            if (!p.contains(e.target) && !e.target.closest('.settings-trigger') && p.classList.contains('active')) p.classList.remove('active');
         });
 
+        // Инициализация при загрузке
         window.onload = () => {
-            showToast(i18n[currentLang].welcome);
+            setTheme(state.theme);
+            setAnim(state.anim);
+            changeLang(state.lang);
         };
     </script>
 </body>
