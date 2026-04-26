@@ -60,7 +60,7 @@
 
         body.static-bg { animation: none !important; background-size: cover; }
 
-        /* --- Настройки (ФИКС ВЫЕЗДА) --- */
+        /* --- Настройки --- */
         .settings-trigger {
             position: fixed;
             top: 20px;
@@ -81,11 +81,6 @@
             min-height: 44px;
         }
 
-        .settings-trigger span {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
         .settings-panel {
             position: fixed;
             top: 0;
@@ -95,12 +90,13 @@
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(25px);
             z-index: 1050;
-            transform: translateX(-101%); /* Полностью скрыто */
+            transform: translateX(-101%);
             transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             padding: 80px 25px 40px;
             display: flex;
             flex-direction: column;
             box-shadow: 10px 0 50px rgba(0,0,0,0.8);
+            box-sizing: border-box;
         }
 
         .settings-panel.active { transform: translateX(0); }
@@ -115,7 +111,7 @@
             padding: 12px;
             border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
             text-align: left;
         }
         .switch-btn.active { background: #f1c40f; color: #000; font-weight: bold; border-color: #f1c40f; }
@@ -181,25 +177,60 @@
 
         .menu-button:hover { transform: translateY(-8px); border-color: #f1c40f; background: rgba(255,255,255,0.2); }
 
-        /* --- Внутренности настроек --- */
-        .settings-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .status-badge { display: flex; align-items: center; font-size: 11px; color: #2ecc71; margin-bottom: 15px; }
+        /* --- Внутренности настроек (ИСПРАВЛЕНО ВИЗУАЛЬНО) --- */
+        .settings-footer { 
+            margin-top: auto; 
+            padding-top: 25px; 
+            border-top: 1px solid rgba(255,255,255,0.15); 
+        }
+        
+        .legal-links-settings { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 14px; 
+            margin-bottom: 25px;
+        }
+
+        .legal-links-settings a { 
+            color: #fff; 
+            text-decoration: none; 
+            font-size: 14px;
+            background: rgba(241, 196, 15, 0.15);
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .legal-links-settings a:hover { 
+            background: rgba(241, 196, 15, 0.3);
+            border-color: #f1c40f;
+        }
+
+        .status-badge { 
+            display: flex; 
+            align-items: center; 
+            font-size: 11px; 
+            color: #2ecc71; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
         .status-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; margin-right: 8px; animation: pulseStatus 2s infinite; }
-        .legal-links-settings { display: flex; flex-direction: column; gap: 12px; font-size: 13px; margin-bottom: 20px; }
-        .legal-links-settings a { color: #f1c40f; text-decoration: none; opacity: 0.7; }
-        footer { font-size: 11px; color: rgba(255,255,255,0.3); }
+        
+        footer { 
+            font-size: 11px; 
+            color: rgba(255,255,255,0.4); 
+            line-height: 1.4;
+        }
 
         /* --- Адаптивность --- */
         @media (max-width: 600px) {
-            .settings-trigger span { display: none; } /* Скрываем текст на телефонах */
-            .settings-trigger { padding: 12px; border-radius: 50%; }
-            .settings-panel { width: 80%; }
+            .settings-trigger span { display: none; }
+            .settings-panel { width: 85%; }
             .menu-button { width: 100%; }
-            h1 { font-size: 2em; }
-        }
-
-        @media (min-width: 601px) {
-            .settings-trigger { padding: 8px 20px; border-radius: 30px; }
         }
     </style>
 </head>
@@ -207,34 +238,36 @@
 
     <div class="settings-trigger" onclick="toggleSettings()">
         <svg style="width:22px; height:22px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-        <span>Настройки</span>
+        <span id="trigger-text">Настройки</span>
     </div>
 
     <div class="settings-panel" id="settingsPanel">
         <div class="setting-item">
             <label>Тема</label>
-            <button class="switch-btn active" id="lightModeBtn" onclick="setTheme('light')">Светлая (Золото)</button>
+            <button class="switch-btn" id="lightModeBtn" onclick="setTheme('light')">Светлая (Золото)</button>
             <button class="switch-btn" id="darkModeBtn" onclick="setTheme('dark')">Темная (Ночь)</button>
         </div>
 
         <div class="setting-item">
             <label>Фон</label>
-            <button class="switch-btn active" id="animOnBtn" onclick="setAnim(true)">Живой градиент</button>
+            <button class="switch-btn" id="animOnBtn" onclick="setAnim(true)">Живой градиент</button>
             <button class="switch-btn" id="animOffBtn" onclick="setAnim(false)">Статичный</button>
         </div>
 
         <div class="settings-footer">
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                System Status: Online
-            </div>
             <div class="legal-links-settings">
                 <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a>
                 <a href="https://mixqzero.github.io/soglasie" target="_blank">Соглашение пользователя</a>
             </div>
+            
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                System Status: Online
+            </div>
+            
             <footer>
                 © 2024-2026 MixQZero<br>
-                Core: web4Global
+                Core: web4Global Edition
             </footer>
         </div>
     </div>
@@ -262,11 +295,20 @@
     </div>
 
     <script>
+        // Логика сохранения (LocalStorage)
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedAnim = localStorage.getItem('anim') === 'false' ? false : true;
+
+            setTheme(savedTheme, false); // false чтобы не сохранять повторно при загрузке
+            setAnim(savedAnim, false);
+        });
+
         function toggleSettings() {
             document.getElementById('settingsPanel').classList.toggle('active');
         }
 
-        function setTheme(mode) {
+        function setTheme(mode, save = true) {
             const body = document.body;
             const lBtn = document.getElementById('lightModeBtn');
             const dBtn = document.getElementById('darkModeBtn');
@@ -280,9 +322,10 @@
                 lBtn.classList.add('active');
                 dBtn.classList.remove('active');
             }
+            if(save) localStorage.setItem('theme', mode);
         }
 
-        function setAnim(on) {
+        function setAnim(on, save = true) {
             const body = document.body;
             const onBtn = document.getElementById('animOnBtn');
             const offBtn = document.getElementById('animOffBtn');
@@ -296,6 +339,7 @@
                 offBtn.classList.add('active');
                 onBtn.classList.remove('active');
             }
+            if(save) localStorage.setItem('anim', on);
         }
 
         // Закрытие панели при клике вне её
