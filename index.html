@@ -60,44 +60,53 @@
 
         body.static-bg { animation: none !important; background-size: cover; }
 
-        /* --- Настройки (Исправлено появление) --- */
+        /* --- Настройки (ФИКС ВЫЕЗДА) --- */
         .settings-trigger {
             position: fixed;
             top: 20px;
             left: 20px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             cursor: pointer;
-            z-index: 1001;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 15px;
-            border-radius: 30px;
+            z-index: 1100;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px;
+            border-radius: 50px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             transition: 0.3s;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .settings-trigger span {
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .settings-panel {
             position: fixed;
             top: 0;
-            left: -110%; /* Полностью за экраном */
-            width: 320px;
+            left: 0;
+            width: 300px;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(25px);
-            z-index: 1000;
+            z-index: 1050;
+            transform: translateX(-101%); /* Полностью скрыто */
             transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             padding: 80px 25px 40px;
             display: flex;
             flex-direction: column;
-            box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+            box-shadow: 10px 0 50px rgba(0,0,0,0.8);
         }
 
-        .settings-panel.active { transform: translateX(110%); } /* Выезжает в поле зрения */
+        .settings-panel.active { transform: translateX(0); }
 
-        .setting-item { margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px; }
-        .setting-item label { font-size: 13px; color: #f1c40f; text-transform: uppercase; letter-spacing: 1px; }
+        .setting-item { margin-bottom: 25px; display: flex; flex-direction: column; gap: 10px; }
+        .setting-item label { font-size: 12px; color: #f1c40f; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; }
         
         .switch-btn {
             background: rgba(255, 255, 255, 0.05);
@@ -111,7 +120,7 @@
         }
         .switch-btn.active { background: #f1c40f; color: #000; font-weight: bold; border-color: #f1c40f; }
 
-        /* --- Главный контент (Исправлено расположение) --- */
+        /* --- Контент --- */
         .header-container {
             display: flex;
             flex-direction: column;
@@ -128,7 +137,7 @@
             align-items: center;
             width: 100%;
             max-width: 900px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         h2 {
@@ -137,11 +146,10 @@
             letter-spacing: 3px;
             color: #f1c40f;
             border-bottom: 2px solid rgba(241, 196, 15, 0.4);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             margin-bottom: 25px;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 0.5s forwards;
-            align-self: center; /* Центрируем заголовок */
         }
 
         .buttons-grid {
@@ -153,13 +161,12 @@
         }
 
         .menu-button {
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 280px;
-            padding: 22px;
+            padding: 24px;
             text-decoration: none;
             color: #fff;
             font-weight: 600;
@@ -167,45 +174,53 @@
             backdrop-filter: blur(15px);
             border: 1px solid var(--btn-border);
             border-radius: 22px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
         }
 
         .menu-button:hover { transform: translateY(-8px); border-color: #f1c40f; background: rgba(255,255,255,0.2); }
 
-        /* --- Футер внутри настроек --- */
+        /* --- Внутренности настроек --- */
         .settings-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
         .status-badge { display: flex; align-items: center; font-size: 11px; color: #2ecc71; margin-bottom: 15px; }
         .status-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; margin-right: 8px; animation: pulseStatus 2s infinite; }
         .legal-links-settings { display: flex; flex-direction: column; gap: 12px; font-size: 13px; margin-bottom: 20px; }
-        .legal-links-settings a { color: #f1c40f; text-decoration: none; opacity: 0.8; }
-        footer { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.5; }
+        .legal-links-settings a { color: #f1c40f; text-decoration: none; opacity: 0.7; }
+        footer { font-size: 11px; color: rgba(255,255,255,0.3); }
 
+        /* --- Адаптивность --- */
         @media (max-width: 600px) {
-            .settings-panel { width: 85%; }
+            .settings-trigger span { display: none; } /* Скрываем текст на телефонах */
+            .settings-trigger { padding: 12px; border-radius: 50%; }
+            .settings-panel { width: 80%; }
             .menu-button { width: 100%; }
+            h1 { font-size: 2em; }
+        }
+
+        @media (min-width: 601px) {
+            .settings-trigger { padding: 8px 20px; border-radius: 30px; }
         }
     </style>
 </head>
 <body>
 
     <div class="settings-trigger" onclick="toggleSettings()">
-        <svg style="width:20px; height:20px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        <svg style="width:22px; height:22px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
         <span>Настройки</span>
     </div>
 
     <div class="settings-panel" id="settingsPanel">
         <div class="setting-item">
-            <label>Визуальная тема</label>
+            <label>Тема</label>
             <button class="switch-btn active" id="lightModeBtn" onclick="setTheme('light')">Светлая (Золото)</button>
             <button class="switch-btn" id="darkModeBtn" onclick="setTheme('dark')">Темная (Ночь)</button>
         </div>
 
         <div class="setting-item">
-            <label>Динамика фона</label>
+            <label>Фон</label>
             <button class="switch-btn active" id="animOnBtn" onclick="setAnim(true)">Живой градиент</button>
-            <button class="switch-btn" id="animOffBtn" onclick="setAnim(false)">Статичный цвет</button>
+            <button class="switch-btn" id="animOffBtn" onclick="setAnim(false)">Статичный</button>
         </div>
 
         <div class="settings-footer">
@@ -219,7 +234,7 @@
             </div>
             <footer>
                 © 2024-2026 MixQZero<br>
-                Core: web4Global Edition
+                Core: web4Global
             </footer>
         </div>
     </div>
@@ -283,8 +298,8 @@
             }
         }
 
-        // Закрытие при клике по фону
-        document.addEventListener('click', (e) => {
+        // Закрытие панели при клике вне её
+        document.addEventListener('mousedown', (e) => {
             const panel = document.getElementById('settingsPanel');
             const trigger = document.querySelector('.settings-trigger');
             if (!panel.contains(e.target) && !trigger.contains(e.target) && panel.classList.contains('active')) {
