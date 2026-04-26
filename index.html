@@ -22,9 +22,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes backgroundFadeIn {
-            from { filter: brightness(0); }
-            to { filter: brightness(1); }
+        @keyframes globalFadeIn {
+            from { background-color: #000; }
+            to { background-color: transparent; }
         }
 
         @keyframes pulseStatus {
@@ -33,11 +33,21 @@
             100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
-        /* --- Основные стили --- */
-        html, body {
-            height: 100%;
-            margin: 0;
+        /* --- Базовые переменные тем --- */
+        :root {
+            --bg-gradient: linear-gradient(-45deg, #8e44ad, #b48a00, #6a1b9a, #c89600);
+            --btn-bg: rgba(255, 255, 255, 0.15);
+            --btn-border: rgba(255, 255, 255, 0.25);
         }
+
+        body.dark-mode {
+            --bg-gradient: linear-gradient(-45deg, #1a1a1a, #000000, #2c3e50, #000000);
+            --btn-bg: rgba(0, 0, 0, 0.4);
+            --btn-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Основные стили --- */
+        html { background-color: #000; }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -45,252 +55,227 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(-45deg, #8e44ad, #b48a00, #6a1b9a, #c89600);
+            margin: 0;
+            background: var(--bg-gradient);
             background-size: 400% 400%;
-            animation: 
-                purpleGoldGradientShift 15s ease infinite,
-                backgroundFadeIn 2s ease-out forwards; /* Progressive Loading фона */
+            animation: purpleGoldGradientShift 15s ease infinite, globalFadeIn 2s ease-out forwards;
             overflow-x: hidden;
             color: #f0f0f0;
             padding: 20px;
             box-sizing: border-box;
+            transition: background 0.8s ease;
         }
 
-        /* --- Контентная часть (тянется) --- */
-        .main-content {
-            flex: 1 0 auto;
+        body.static-bg { animation: globalFadeIn 2s ease-out forwards !important; background-size: cover; }
+
+        /* --- Кнопка настроек --- */
+        .settings-trigger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+        .settings-trigger:hover { background: rgba(255, 255, 255, 0.1); }
+        .settings-trigger svg { width: 20px; height: 20px; fill: #fff; transition: transform 0.5s; }
+        .settings-trigger:hover svg { transform: rotate(90deg); }
+
+        /* --- Боковая панель --- */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 80px 20px 40px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            width: 100%;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .settings-panel.active { left: 0; }
 
-        /* --- Заголовок --- */
+        .setting-item {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .setting-item label { font-size: 14px; color: #f1c40f; font-weight: bold; }
+        
+        .switch-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+        .switch-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .switch-btn.active { background: #f1c40f; color: #000; font-weight: bold; }
+
+        .settings-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+        /* --- Контент --- */
         .header-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 40px;
+            margin-top: 60px;
             margin-bottom: 40px;
-            text-align: center;
             animation: fadeInDown 1s ease-out forwards;
         }
-
-        .header-container img {
-            width: 65px;
-            height: 65px;
-            margin-bottom: 15px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        h1 {
-            color: #fff;
-            margin: 0;
-            font-size: 2.5em;
-            font-family: 'Arial Black', sans-serif;
-            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
+        .header-container img { width: 65px; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); margin-bottom: 15px; }
+        h1 { font-size: 2.5em; font-family: 'Arial Black', sans-serif; margin: 0; text-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); }
 
         h2 {
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            color: #f1c40f;
-            text-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
-            border-bottom: 2px solid rgba(241, 196, 15, 0.5);
-            padding-bottom: 8px;
-            width: fit-content;
-            opacity: 0;
+            font-size: 1.1em; text-transform: uppercase; letter-spacing: 3px;
+            color: #f1c40f; border-bottom: 2px solid rgba(241, 196, 15, 0.5);
+            padding-bottom: 8px; margin-top: 40px; opacity: 0;
             animation: fadeInUp 0.8s ease-out 0.5s forwards;
         }
 
-        /* --- Меню --- */
-        .menu-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 900px;
-        }
+        .menu-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; width: 100%; max-width: 900px;}
 
-        .menu-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* --- Кнопки (Liquid Glass) --- */
         .menu-button {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 280px;
-            padding: 20px 25px;
-            text-decoration: none;
-            color: #fff;
-            font-weight: 600;
-            font-size: 1.1em;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            backdrop-filter: blur(15px) saturate(160%);
-            -webkit-backdrop-filter: blur(15px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 4px 4px rgba(255, 255, 255, 0.15);
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
+            position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 280px; padding: 20px 25px; text-decoration: none; color: #fff; font-weight: 600;
+            background: var(--btn-bg); backdrop-filter: blur(15px) saturate(160%);
+            border: 1px solid var(--btn-border); border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            transition: 0.3s; opacity: 0; animation: fadeInUp 0.8s ease-out forwards;
         }
-
-        .btn-1 { animation-delay: 0.6s; }
-        .btn-2 { animation-delay: 0.7s; }
-        .btn-3 { animation-delay: 0.8s; }
-        .btn-4 { animation-delay: 0.9s; }
-        .btn-5 { animation-delay: 1.0s; }
-
-        .menu-button::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
-            pointer-events: none;
-        }
-
-        .menu-button:hover {
-            transform: translateY(-7px);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 45px rgba(241, 196, 15, 0.25);
-            border-color: rgba(241, 196, 15, 0.6);
-        }
-
+        .menu-button:hover { transform: translateY(-7px); border-color: #f1c40f; box-shadow: 0 15px 45px rgba(241, 196, 15, 0.2); }
         .menu-button:active { transform: scale(0.95); }
 
-        .support-text-support {
-            font-size: 0.75em;
-            color: #f1c40f;
-            margin-top: 6px;
-            font-weight: normal;
-            display: block;
-        }
+        .support-text-support { font-size: 0.75em; color: #f1c40f; margin-top: 6px; }
 
-        /* --- Нижняя часть (Status & Footer) --- */
-        .bottom-section {
-            flex-shrink: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            padding: 40px 0 20px 0;
-            margin-top: auto;
-        }
+        /* --- Статус и ссылки в настройках --- */
+        .status-badge { display: flex; align-items: center; font-size: 10px; color: #2ecc71; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .status-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; margin-right: 8px; animation: pulseStatus 2s infinite; }
+        
+        .legal-links-settings { display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
+        .legal-links-settings a { color: #f1c40f; text-decoration: none; opacity: 0.8; }
+        .legal-links-settings a:hover { opacity: 1; text-decoration: underline; }
 
-        /* Статус плашка */
-        .status-badge {
-            display: flex;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 1.2s forwards;
-        }
+        footer { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 20px; }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #2ecc71;
-            border-radius: 50%;
-            margin-right: 8px;
-            animation: pulseStatus 2s infinite;
-        }
-
-        .legal-links {
-            font-size: 13px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 1.4s forwards;
-        }
-
-        .legal-links a { 
-            color: #f1c40f; 
-            text-decoration: none; 
-            border-bottom: 1px dashed; 
-            margin: 0 10px; 
-            transition: 0.3s;
-        }
-
-        .legal-links a:hover { color: #fff; }
-
-        footer {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-        }
-
-        .footer-version { color: #f1c40f; opacity: 0.6; display: block; margin-top: 5px; font-weight: bold; }
-
-        @media (max-width: 600px) {
-            .menu-button { width: 90%; }
-            h1 { font-size: 2em; }
-        }
+        @media (max-width: 600px) { .menu-button { width: 90%; } .settings-panel { width: 80%; } }
     </style>
 </head>
 <body>
 
-    <div class="main-content">
-        <div class="header-container">
-            <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Логотип MixQZero">
-            <h1>MixQZero</h1>
+    <div class="settings-trigger" onclick="toggleSettings()">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        <span>Настройки</span>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel">
+        <div class="setting-item">
+            <label>Тема интерфейса</label>
+            <button class="switch-btn active" id="lightModeBtn" onclick="setTheme('light')">Светлый режим</button>
+            <button class="switch-btn" id="darkModeBtn" onclick="setTheme('dark')">Темный режим</button>
         </div>
 
-        <div class="menu-container">
-            <h2>Мини-проекты</h2>
-            <div class="menu-row">
-                <a href="https://mixqzero.github.io/case" class="menu-button btn-1">Кейс</a>
-                <a href="https://mixqzero.github.io/random" class="menu-button btn-2">Рандомайзер</a>
-                <a href="https://t.me/mixqzeroai_bot" class="menu-button btn-3">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
-            </div>
+        <div class="setting-item">
+            <label>Анимация фона</label>
+            <button class="switch-btn active" id="animOnBtn" onclick="setAnim(true)">Переливающийся</button>
+            <button class="switch-btn" id="animOffBtn" onclick="setAnim(false)">Статичный</button>
+        </div>
 
-            <h2>Информация и поддержка</h2>
-            <div class="menu-row">
-                <a href="https://t.me/mixqzero" class="menu-button btn-4">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
-                <a href="https://t.me/mixqzerobot" class="menu-button btn-5">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
+        <div class="settings-footer">
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                System Status: Online
             </div>
+            <div class="legal-links-settings">
+                <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a>
+                <a href="https://mixqzero.github.io/soglasie" target="_blank">Пользовательское соглашение</a>
+            </div>
+            <footer>
+                © 2024-2026 MixQZero<br>ver. web4Global
+            </footer>
         </div>
     </div>
 
-    <div class="bottom-section">
-        <div class="status-badge">
-            <div class="status-dot"></div>
-            System Status: Online
-        </div>
-
-        <div class="legal-links">
-            <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> & 
-            <a href="https://mixqzero.github.io/soglasie" target="_blank">Соглашение</a>
-        </div>
-
-        <footer>
-            <p>© 2024-2026 MixQZero. Все права защищены.</p>
-            <span class="footer-version">ver. web4Global</span>
-        </footer>
+    <div class="header-container">
+        <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Logo">
+        <h1>MixQZero</h1>
     </div>
 
+    <div class="menu-row">
+        <h2>Мини-проекты</h2>
+        <a href="https://mixqzero.github.io/case" class="menu-button" style="animation-delay: 0.6s;">Кейс</a>
+        <a href="https://mixqzero.github.io/random" class="menu-button" style="animation-delay: 0.7s;">Рандомайзер</a>
+        <a href="https://t.me/mixqzeroai_bot" class="menu-button" style="animation-delay: 0.8s;">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
+    </div>
+
+    <div class="menu-row">
+        <h2>Информация</h2>
+        <a href="https://t.me/mixqzero" class="menu-button" style="animation-delay: 0.9s;">Телеграмм канал<span class="support-text-support">Новости</span></a>
+        <a href="https://t.me/mixqzerobot" class="menu-button" style="animation-delay: 1s;">Телеграмм бот<span class="support-text-support">Поддержка 24/7</span></a>
+    </div>
+
+    <script>
+        function toggleSettings() {
+            document.getElementById('settingsPanel').classList.toggle('active');
+        }
+
+        function setTheme(mode) {
+            const body = document.body;
+            const lBtn = document.getElementById('lightModeBtn');
+            const dBtn = document.getElementById('darkModeBtn');
+
+            if(mode === 'dark') {
+                body.classList.add('dark-mode');
+                dBtn.classList.add('active');
+                lBtn.classList.remove('active');
+            } else {
+                body.classList.remove('dark-mode');
+                lBtn.classList.add('active');
+                dBtn.classList.remove('active');
+            }
+        }
+
+        function setAnim(on) {
+            const body = document.body;
+            const onBtn = document.getElementById('animOnBtn');
+            const offBtn = document.getElementById('animOffBtn');
+
+            if(on) {
+                body.classList.remove('static-bg');
+                onBtn.classList.add('active');
+                offBtn.classList.remove('active');
+            } else {
+                body.classList.add('static-bg');
+                offBtn.classList.add('active');
+                onBtn.classList.remove('active');
+            }
+        }
+
+        // Закрытие при клике вне панели
+        document.addEventListener('click', (e) => {
+            const panel = document.getElementById('settingsPanel');
+            const trigger = document.querySelector('.settings-trigger');
+            if (!panel.contains(e.target) && !trigger.contains(e.target) && panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
