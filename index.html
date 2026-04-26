@@ -13,45 +13,56 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes backgroundFadeIn {
+            from { filter: brightness(0); }
+            to { filter: brightness(1); }
+        }
+
+        @keyframes pulseStatus {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
         /* --- Основные стили --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
             min-height: 100vh;
             background: linear-gradient(-45deg, #8e44ad, #b48a00, #6a1b9a, #c89600);
             background-size: 400% 400%;
-            animation: purpleGoldGradientShift 15s ease infinite;
+            animation: 
+                purpleGoldGradientShift 15s ease infinite,
+                backgroundFadeIn 2s ease-out forwards; /* Progressive Loading фона */
             overflow-x: hidden;
             color: #f0f0f0;
             padding: 20px;
-            margin: 0;
             box-sizing: border-box;
-            position: relative;
-            padding-bottom: 120px;
+        }
+
+        /* --- Контентная часть (тянется) --- */
+        .main-content {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
         }
 
         /* --- Заголовок --- */
@@ -62,7 +73,7 @@
             margin-top: 40px;
             margin-bottom: 40px;
             text-align: center;
-            animation: fadeInDown 0.8s ease-out forwards;
+            animation: fadeInDown 1s ease-out forwards;
         }
 
         .header-container img {
@@ -94,10 +105,10 @@
             padding-bottom: 8px;
             width: fit-content;
             opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.3s forwards;
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
         }
 
-        /* --- Контейнер меню --- */
+        /* --- Меню --- */
         .menu-container {
             display: flex;
             flex-direction: column;
@@ -115,7 +126,7 @@
             flex-wrap: wrap;
         }
 
-        /* --- Стеклянные Кнопки --- */
+        /* --- Кнопки (Liquid Glass) --- */
         .menu-button {
             position: relative;
             display: flex;
@@ -138,15 +149,14 @@
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
             opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        /* Задержки анимации */
-        .btn-1 { animation-delay: 0.4s; }
-        .btn-2 { animation-delay: 0.5s; }
-        .btn-3 { animation-delay: 0.6s; }
-        .btn-4 { animation-delay: 0.7s; }
-        .btn-5 { animation-delay: 0.8s; }
+        .btn-1 { animation-delay: 0.6s; }
+        .btn-2 { animation-delay: 0.7s; }
+        .btn-3 { animation-delay: 0.8s; }
+        .btn-4 { animation-delay: 0.9s; }
+        .btn-5 { animation-delay: 1.0s; }
 
         .menu-button::before {
             content: "";
@@ -163,9 +173,7 @@
             border-color: rgba(241, 196, 15, 0.6);
         }
 
-        .menu-button:active {
-            transform: scale(0.95); /* Эффект нажатия */
-        }
+        .menu-button:active { transform: scale(0.95); }
 
         .support-text-support {
             font-size: 0.75em;
@@ -173,35 +181,68 @@
             margin-top: 6px;
             font-weight: normal;
             display: block;
-            opacity: 0.9;
         }
 
-        /* --- Нижняя часть --- */
+        /* --- Нижняя часть (Status & Footer) --- */
         .bottom-section {
-            margin-top: auto;
+            flex-shrink: 0;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            padding-bottom: 20px;
-            width: 100%;
+            padding: 40px 0 20px 0;
+            margin-top: auto;
+        }
+
+        /* Статус плашка */
+        .status-badge {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.2s forwards;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulseStatus 2s infinite;
         }
 
         .legal-links {
             font-size: 13px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 1s forwards;
             text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1.4s forwards;
         }
-        .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; margin: 0 8px; transition: 0.3s; }
-        .legal-links a:hover { color: #fff; border-bottom-style: solid; }
+
+        .legal-links a { 
+            color: #f1c40f; 
+            text-decoration: none; 
+            border-bottom: 1px dashed; 
+            margin: 0 10px; 
+            transition: 0.3s;
+        }
+
+        .legal-links a:hover { color: #fff; }
 
         footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.4);
-            font-size: 12px;
-            letter-spacing: 0.5px;
+            font-size: 11px;
         }
+
         .footer-version { color: #f1c40f; opacity: 0.6; display: block; margin-top: 5px; font-weight: bold; }
 
         @media (max-width: 600px) {
@@ -212,28 +253,34 @@
 </head>
 <body>
 
-    <div class="header-container">
-        <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Логотип MixQZero">
-        <h1>MixQZero</h1>
-    </div>
-
-    <div class="menu-container">
-
-        <h2>Мини-проекты</h2>
-        <div class="menu-row">
-            <a href="https://mixqzero.github.io/case" class="menu-button btn-1">Кейс</a>
-            <a href="https://mixqzero.github.io/random" class="menu-button btn-2">Рандомайзер</a>
-            <a href="https://t.me/mixqzeroai_bot" class="menu-button btn-3">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
+    <div class="main-content">
+        <div class="header-container">
+            <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Логотип MixQZero">
+            <h1>MixQZero</h1>
         </div>
 
-        <h2>Информация и поддержка</h2>
-        <div class="menu-row">
-            <a href="https://t.me/mixqzero" class="menu-button btn-4">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
-            <a href="https://t.me/mixqzerobot" class="menu-button btn-5">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
+        <div class="menu-container">
+            <h2>Мини-проекты</h2>
+            <div class="menu-row">
+                <a href="https://mixqzero.github.io/case" class="menu-button btn-1">Кейс</a>
+                <a href="https://mixqzero.github.io/random" class="menu-button btn-2">Рандомайзер</a>
+                <a href="https://t.me/mixqzeroai_bot" class="menu-button btn-3">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
+            </div>
+
+            <h2>Информация и поддержка</h2>
+            <div class="menu-row">
+                <a href="https://t.me/mixqzero" class="menu-button btn-4">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
+                <a href="https://t.me/mixqzerobot" class="menu-button btn-5">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
+            </div>
         </div>
     </div>
 
     <div class="bottom-section">
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            System Status: Online
+        </div>
+
         <div class="legal-links">
             <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> & 
             <a href="https://mixqzero.github.io/soglasie" target="_blank">Соглашение</a>
