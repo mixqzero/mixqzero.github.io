@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project MixQZero - Главная</title>
+    <title>MixQZero - Главная</title>
     <style>
-        /* --- Базовая анимация фона (без изменений) --- */
+        /* --- Анимации фона --- */
         @keyframes purpleGoldGradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        /* --- Основные стили --- */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -25,95 +26,112 @@
             overflow-x: hidden;
             color: #f0f0f0;
             padding: 20px;
+            margin: 0;
             box-sizing: border-box;
             position: relative;
-            padding-bottom: 75px;
+            padding-bottom: 100px;
         }
 
+        /* --- Верхняя полоска --- */
         .top-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 10px;
-            background-color: rgba(0, 0, 0, 0.3);
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
             z-index: 100;
         }
 
+        /* --- Заголовок --- */
         .header-container {
             display: flex;
             align-items: center;
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            align-self: flex-start;
         }
 
         .header-container img {
             width: 50px;
             height: 50px;
-            margin-right: 10px;
-            border-radius: 5px;
+            margin-right: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         h1 {
             color: #fff;
             margin: 0;
-            font-size: 2.0em;
+            font-size: 1.8em;
             font-family: 'Arial Black', sans-serif;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* --- КОНТЕЙНЕР МЕНЮ --- */
+        h2 {
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            border-left: 3px solid #f1c40f;
+            padding-left: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* --- Контейнер меню --- */
         .menu-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 600px;
-            margin-top: 80px;
+            max-width: 700px;
         }
 
         .menu-row {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            gap: 20px;
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
-        /* --- ЭФФЕКТ ЖИДКОГО СТЕКЛА (LIQUID GLASS) --- */
+        /* --- Стеклянные Кнопки (Liquid Glass) --- */
         .menu-button {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
+            width: 280px;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-align: center;
             
-            /* Стеклянная база */
+            /* Эффект Liquid Glass */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
             backdrop-filter: blur(15px) saturate(160%);
             -webkit-backdrop-filter: blur(15px) saturate(160%);
-            
-            color: #fff;
-            padding: 15px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 18px;
-            text-decoration: none;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-align: center;
             
             /* Объемные тени */
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 8px 32px rgba(0, 0, 0, 0.2),
                 inset 0 4px 4px rgba(255, 255, 255, 0.2);
             
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 45%;
-            box-sizing: border-box;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
         }
 
-        /* Глянцевый блик сверху */
+        /* Глянцевый блик сверху кнопки */
         .menu-button::before {
             content: "";
             position: absolute;
@@ -125,45 +143,65 @@
             pointer-events: none;
         }
 
+        /* Бегущий блик при наведении */
+        .menu-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 150%;
+            height: 200%;
+            background: linear-gradient(
+                115deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transform: rotate(30deg);
+            transition: 0.8s;
+        }
+
         .menu-button:hover {
-            transform: translateY(-5px) scale(1.03);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 4px 8px rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 45px rgba(241, 196, 15, 0.2);
+            border-color: rgba(241, 196, 15, 0.5);
         }
 
-        .menu-button:active {
-            transform: scale(0.98);
+        .menu-button:hover::after {
+            left: 150%;
         }
 
-        /* Тексты поддержки */
+        /* Текст внутри кнопок */
         .support-text-support {
-            font-size: 0.7em;
+            font-size: 0.75em;
             color: #f1c40f;
-            display: block;
             margin-top: 5px;
             font-weight: normal;
+            display: block;
         }
 
-        /* --- ФУТЕР И ССЫЛКИ (без изменений текстов) --- */
+        /* --- Подвал и ссылки --- */
         .legal-links {
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 14px;
+            margin-top: 40px;
+            font-size: 13px;
         }
-        .legal-links a { color: #f1c40f; text-decoration: underline; }
+        .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; }
 
         footer {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            text-align: center; padding: 10px 0;
-            color: rgba(255, 255, 255, 0.6); font-size: 13px;
+            margin-top: auto;
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
         }
-        .footer-version { display: block; margin-top: 3px; font-size: 0.8em; color: rgba(255, 255, 255, 0.4); }
+        .footer-version { color: #f1c40f; opacity: 0.7; }
 
-        /* Адаптивность */
-        @media (max-width: 480px) {
-            .menu-row { flex-direction: column; align-items: center; }
-            .menu-button { width: 80%; margin-bottom: 15px; }
+        /* --- Адаптивность --- */
+        @media (max-width: 600px) {
+            .menu-button { width: 100%; }
+            .header-container { align-self: center; }
+            h1 { font-size: 1.4em; }
         }
     </style>
 </head>
@@ -177,12 +215,8 @@
     </div>
 
     <div class="menu-container">
-        <h2>Крупные проекты</h2>
-        <div class="menu-row">
-            <span class="menu-button" style="opacity: 0.5; cursor: default;">В разработке...</span>
-        </div>
 
-        <h2>Некрупные проекты</h2>
+        <h2>Мини-проекты</h2>
         <div class="menu-row">
             <a href="https://mixqzero.github.io/case" class="menu-button">Кейс</a>
             <a href="https://mixqzero.github.io/random" class="menu-button">Рандомайзер</a>
@@ -190,25 +224,28 @@
 
         <h2>Информация и поддержка</h2>
         <div class="menu-row">
-            <a href="https://t.me/mixqzero" class="menu-button">Телеграмм канал проекта<span class="support-text-support">Информация</span></a>
-            <a href="https://t.me/mixqzerobot" class="menu-button">Телеграмм бот проекта<span class="support-text-support">Поддержка</span></a>
+            <a href="https://t.me/mixqzero" class="menu-button">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
+            <a href="https://t.me/mixqzerobot" class="menu-button">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
         </div>
         <div class="menu-row">
-            <a href="https://t.me/kqxsrZ" class="menu-button">Разработчик проекта</a>
+            <a href="https://t.me/kqxsrZ" class="menu-button">Связаться с разработчиком</a>
         </div>
     </div>
 
     <div class="legal-links">
-        <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> и
-        <a href="https://mixqzero.github.io/soglasie" target="_blank">Пользовательское соглашение</a>
+        <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> & 
+        <a href="https://mixqzero.github.io/soglasie" target="_blank">Соглашение</a>
     </div>
 
     <footer>
-        <span>© 2024-2025 Project MixQZero. Все права защищены.</span>
-        <br>
-        <a href="https://mixqzero.github.io/politika" target="_blank">Политика конфиденциальности</a> | <a href="https://mixqzero.github.io/soglasie" target="_blank">Пользовательское соглашение</a>
+        <p>© 2024-2026 MixQZero. Все права защищены.</p>
         <span class="footer-version">ver. web4Global</span>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("MixQZero UI Loaded");
+        });
+    </script>
 </body>
 </html>
