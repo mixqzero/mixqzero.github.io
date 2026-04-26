@@ -5,228 +5,240 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MixQZero - Главная</title>
     <style>
-        /* --- Анимации --- */
+        /* Оригинальные анимации из кода #1 */
         @keyframes purpleGoldGradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes shine {
-            100% { left: 125%; }
-        }
-
-        :root {
-            --bg-gradient: linear-gradient(-45deg, #8e44ad, #b48a00, #6a1b9a, #c89600);
-            --accent: #f1c40f;
-            --glass: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-        }
-        body.dark-mode {
-            --bg-gradient: linear-gradient(-45deg, #1a1a1a, #000000, #2c3e50, #000000);
-            --glass: rgba(0, 0, 0, 0.3);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
-            background: var(--bg-gradient);
+            background: linear-gradient(-45deg, #8e44ad, #b48a00, #6a1b9a, #c89600);
             background-size: 400% 400%;
             animation: purpleGoldGradientShift 15s ease infinite;
-            color: #f0f0f0;
+            overflow-x: hidden;
+            color: #ffffff;
             padding: 20px;
             box-sizing: border-box;
-            transition: background 0.5s ease;
         }
-        body.static-bg { animation: none !important; background-size: cover; }
 
-        /* --- Настройки (ПОЛНОСТЬЮ СКРЫТЫ) --- */
-        .settings-trigger { position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; cursor: pointer; z-index: 1001; background: rgba(0, 0, 0, 0.4); padding: 8px 15px; border-radius: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        
-        .settings-panel { 
-            position: fixed; top: 0; left: -400px; width: 310px; height: 100%; 
-            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(20px); z-index: 1000; 
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            padding: 80px 25px 30px; display: flex; flex-direction: column; 
-            box-shadow: none; 
+        /* Шапка */
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 60px;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out forwards;
         }
-        .settings-panel.active { left: 0; box-shadow: 15px 0 40px rgba(0,0,0,0.6); }
 
-        .setting-item { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .setting-item label { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
-        
-        .switch-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 10px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .switch-btn.active { background: var(--accent); color: #000; font-weight: bold; border-color: var(--accent); }
-        
-        select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px; border-radius: 10px; outline: none; }
+        .header-container img {
+            width: 70px;
+            height: auto;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
 
-        /* --- LIQUID GLASS КНОПКИ --- */
-        .menu-button { 
-            position: relative; width: 280px; padding: 20px; margin: 10px;
-            text-decoration: none; color: #fff; font-weight: 600; 
-            background: var(--glass); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); 
-            border-radius: 18px; 
-            overflow: hidden; opacity: 0;
+        h1 {
+            font-size: 2.5em;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            margin: 0;
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Секции */
+        .section-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #f1c40f;
+            border-bottom: 2px solid rgba(241, 196, 15, 0.4);
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
+        }
+
+        /* Сетка кнопок */
+        .buttons-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .menu-button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 280px;
+            padding: 22px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 22px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
-            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
-        
-        /* Эффект блика при наведении */
-        .menu-button::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
-            transform: skewX(-25deg);
+
+        .menu-button:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #f1c40f;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
         }
-        .menu-button:hover::after { animation: shine 0.75s forwards; }
-        .menu-button:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); border-color: var(--accent); }
 
-        /* --- Юридический блок (ПОДНЯТ ВЫШЕ) --- */
-        .legal-box { margin-top: auto; padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 10px; }
-        .legal-box a { color: var(--accent); font-size: 13px; text-decoration: none; opacity: 0.8; }
-        .legal-box a:hover { opacity: 1; text-decoration: underline; }
+        /* Настройки (Оригинальная логика #1) */
+        .settings-trigger {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
 
-        /* --- Контент --- */
-        .header-container { text-align: center; margin: 50px 0 30px; animation: fadeInDown 1s ease; }
-        .header-container img { width: 70px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        h1 { font-size: 2.2em; margin: 10px 0; }
-        h2 { font-size: 1em; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 15px; }
-        .section-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
-        footer { padding: 20px; font-size: 10px; color: rgba(255,255,255,0.2); }
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transform: translateX(110%);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 80px 25px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
 
-        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
-        .toast { background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 8px; margin-top: 5px; font-size: 13px; border-left: 3px solid var(--accent); animation: fadeInUp 0.3s; }
+        .settings-panel.active {
+            transform: translateX(0);
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 30px;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .menu-button { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="toast-container"></div>
-
     <div class="settings-trigger" onclick="toggleSettings()">
-        <svg style="width:18px; height:18px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-        <span data-i18n="settings">Настройки</span>
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="white" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.97 19.05,5.05L16.56,6.05C16.04,5.65 15.48,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.52,5.32 7.96,5.65 7.44,6.05L4.95,5.05C4.73,4.97 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.95C7.96,18.35 8.52,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.48,18.68 16.04,18.35 16.56,17.95L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+        </svg>
     </div>
 
     <div class="settings-panel" id="settingsPanel">
+        <h3 style="color: #f1c40f; margin-top: 0;">Настройки</h3>
         <div class="setting-item">
-            <label data-i18n="lang-label">Язык</label>
-            <select id="langSelect" onchange="changeLang(this.value)">
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
-                <option value="tt">Татарча</option>
-            </select>
+            <p>Версия: 1.0.0</p>
+            <p>Язык: Русский</p>
         </div>
-
-        <div class="setting-item">
-            <label data-i18n="theme-label">Тема</label>
-            <div style="display: flex; gap: 5px;">
-                <button class="switch-btn" id="lBtn" onclick="setTheme('light')" style="flex:1">Light</button>
-                <button class="switch-btn" id="dBtn" onclick="setTheme('dark')" style="flex:1">Dark</button>
-            </div>
-        </div>
-
-        <div class="setting-item">
-            <label data-i18n="anim-label">Фон</label>
-            <div style="display: flex; gap: 5px;">
-                <button class="switch-btn" id="aOn" onclick="setAnim(true)" style="flex:1">ON</button>
-                <button class="switch-btn" id="aOff" onclick="setAnim(false)" style="flex:1">OFF</button>
-            </div>
-        </div>
-
-        <div class="legal-box">
-            <a href="https://mixqzero.github.io/politika" target="_blank" data-i18n="policy">Политика конфиденциальности</a>
-            <a href="https://mixqzero.github.io/soglasie" target="_blank" data-i18n="agreement">Соглашение пользователя</a>
-        </div>
-        <footer style="padding: 10px 0;">© 2024-2026 MixQZero</footer>
+        <button onclick="toggleSettings()" style="background: #f1c40f; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; width: 100%;">Закрыть</button>
     </div>
 
     <div class="header-container">
-        <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png">
+        <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Logo">
         <h1>MixQZero</h1>
     </div>
 
     <div class="section-wrapper">
-        <h2 data-i18n="projects-title">Мини-проекты</h2>
-        <a href="https://mixqzero.github.io/case" class="menu-button" style="animation-delay: 0.1s;" data-i18n="btn-case">Кейс</a>
-        <a href="https://mixqzero.github.io/random" class="menu-button" style="animation-delay: 0.2s;" data-i18n="btn-random">Рандомайзер</a>
-        <a href="https://t.me/mixqzeroai_bot" class="menu-button" style="animation-delay: 0.3s;" data-i18n="btn-ai">ИИ Бот</a>
+        <h2>Мини-проекты</h2>
+        <div class="buttons-grid">
+            <a href="https://mixqzero.github.io/case" class="menu-button" style="animation-delay: 0.6s;">
+                <span>Кейс</span>
+            </a>
+            <a href="https://mixqzero.github.io/random" class="menu-button" style="animation-delay: 0.7s;">
+                <span>Рандомайзер</span>
+            </a>
+            <a href="https://t.me/mixqzeroai_bot" class="menu-button" style="animation-delay: 0.8s;">
+                <span>ИИ от MixQZero</span>
+            </a>
+        </div>
     </div>
 
     <div class="section-wrapper">
-        <h2 data-i18n="info-title">Информация</h2>
-        <a href="https://t.me/mixqzero" class="menu-button" style="animation-delay: 0.4s;" data-i18n="btn-tg">Телеграм Канал</a>
-        <a href="https://t.me/mixqzerobot" class="menu-button" style="animation-delay: 0.5s;" data-i18n="btn-bot">Телеграм Бот</a>
+        <h2>Информация</h2>
+        <div class="buttons-grid">
+            <a href="https://t.me/mixqzero" class="menu-button" style="animation-delay: 0.9s;">
+                <span>Телеграмм канал</span>
+            </a>
+            <a href="https://t.me/mixqzerobot" class="menu-button" style="animation-delay: 1.0s;">
+                <span>Телеграмм бот</span>
+            </a>
+        </div>
     </div>
 
+    <footer>
+        © 2024-2026 MixQZero. Все права защищены.
+    </footer>
+
     <script>
-        const i18n = {
-            ru: { settings: "Настройки", "lang-label": "Язык", "theme-label": "Тема", "anim-label": "Фон", policy: "Политика конфиденциальности", agreement: "Соглашение пользователя", "projects-title": "Мини-проекты", "info-title": "Информация", "btn-case": "Кейс", "btn-random": "Рандомайзер", "btn-ai": "ИИ Бот", "btn-tg": "Телеграм Канал", "btn-bot": "Телеграм Бот" },
-            en: { settings: "Settings", "lang-label": "Language", "theme-label": "Theme", "anim-label": "Background", policy: "Privacy Policy", agreement: "User Agreement", "projects-title": "Mini-Projects", "info-title": "Information", "btn-case": "Case", "btn-random": "Randomizer", "btn-ai": "AI Bot", "btn-tg": "Telegram Channel", "btn-bot": "Telegram Bot" },
-            tt: { settings: "Көйләүләр", "lang-label": "Тел", "theme-label": "Төс", "anim-label": "Фон", policy: "Политика", agreement: "Килешү", "projects-title": "Проектлар", "info-title": "Мәгълүмат", "btn-case": "Кейс", "btn-random": "Рандомайзер", "btn-ai": "ИИ Бот", "btn-tg": "Канал", "btn-bot": "Бот" }
-        };
-
-        let state = {
-            lang: localStorage.getItem('mqz_lang') || 'ru',
-            theme: localStorage.getItem('mqz_theme') || 'light',
-            anim: localStorage.getItem('mqz_anim') !== 'false'
-        };
-
-        function showToast(text) {
-            const t = document.createElement('div'); t.className = 'toast'; t.innerText = text;
-            document.getElementById('toast-container').appendChild(t);
-            setTimeout(() => t.remove(), 2500);
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('active');
         }
 
-        function toggleSettings() { document.getElementById('settingsPanel').classList.toggle('active'); }
-
-        function setTheme(m) {
-            state.theme = m; localStorage.setItem('mqz_theme', m);
-            document.body.classList.toggle('dark-mode', m === 'dark');
-            document.getElementById('lBtn').classList.toggle('active', m === 'light');
-            document.getElementById('dBtn').classList.toggle('active', m === 'dark');
-        }
-
-        function setAnim(on) {
-            state.anim = on; localStorage.setItem('mqz_anim', on);
-            document.body.classList.toggle('static-bg', !on);
-            document.getElementById('aOn').classList.toggle('active', on);
-            document.getElementById('aOff').classList.toggle('active', !on);
-        }
-
-        function changeLang(l) {
-            state.lang = l; localStorage.setItem('mqz_lang', l);
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                el.innerText = i18n[l][el.getAttribute('data-i18n')];
-            });
-            document.getElementById('langSelect').value = l;
-        }
-
-        // Клик вне панели
-        document.addEventListener('click', e => {
-            const p = document.getElementById('settingsPanel');
-            if (!p.contains(e.target) && !e.target.closest('.settings-trigger') && p.classList.contains('active')) p.classList.remove('active');
+        // Закрытие при клике вне панели
+        document.addEventListener('click', (e) => {
+            const panel = document.getElementById('settingsPanel');
+            const trigger = document.querySelector('.settings-trigger');
+            if (!panel.contains(e.target) && !trigger.contains(e.target) && panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            }
         });
-
-        // Инициализация при загрузке
-        window.onload = () => {
-            setTheme(state.theme);
-            setAnim(state.anim);
-            changeLang(state.lang);
-        };
     </script>
 </body>
 </html>
