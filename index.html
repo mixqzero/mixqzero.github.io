@@ -5,11 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MixQZero - Главная</title>
     <style>
-        /* --- Анимации фона --- */
+        /* --- Анимации --- */
         @keyframes purpleGoldGradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- Основные стили --- */
@@ -32,25 +54,14 @@
             padding-bottom: 100px;
         }
 
-        /* --- Верхняя полоска --- */
-        .top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            z-index: 100;
-        }
-
         /* --- Заголовок --- */
         .header-container {
             display: flex;
             align-items: center;
-            margin-top: 20px;
+            margin-top: 40px;
             margin-bottom: 40px;
             align-self: flex-start;
+            animation: fadeInDown 0.8s ease-out forwards;
         }
 
         .header-container img {
@@ -64,7 +75,7 @@
         h1 {
             color: #fff;
             margin: 0;
-            font-size: 1.8em;
+            font-size: 2.2em;
             font-family: 'Arial Black', sans-serif;
             text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
         }
@@ -80,6 +91,8 @@
             padding-left: 10px;
             width: 100%;
             max-width: 600px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.3s forwards;
         }
 
         /* --- Контейнер меню --- */
@@ -115,23 +128,29 @@
             font-size: 1.1em;
             text-align: center;
             
-            /* Эффект Liquid Glass */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
             backdrop-filter: blur(15px) saturate(160%);
             -webkit-backdrop-filter: blur(15px) saturate(160%);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 18px;
             
-            /* Объемные тени */
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.2),
-                inset 0 4px 4px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 4px 4px rgba(255, 255, 255, 0.2);
             
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
+
+            /* Начальное состояние для анимации появления */
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
         }
 
-        /* Глянцевый блик сверху кнопки */
+        /* Задержки для кнопок (эффект очереди) */
+        .btn-1 { animation-delay: 0.5s; }
+        .btn-2 { animation-delay: 0.6s; }
+        .btn-3 { animation-delay: 0.7s; }
+        .btn-4 { animation-delay: 0.8s; }
+        .btn-5 { animation-delay: 0.9s; }
+
         .menu-button::before {
             content: "";
             position: absolute;
@@ -143,7 +162,6 @@
             pointer-events: none;
         }
 
-        /* Бегущий блик при наведении */
         .menu-button::after {
             content: '';
             position: absolute;
@@ -151,12 +169,7 @@
             left: -150%;
             width: 150%;
             height: 200%;
-            background: linear-gradient(
-                115deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent
-            );
+            background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transform: rotate(30deg);
             transition: 0.8s;
         }
@@ -172,7 +185,6 @@
             left: 150%;
         }
 
-        /* Текст внутри кнопок */
         .support-text-support {
             font-size: 0.75em;
             color: #f1c40f;
@@ -181,10 +193,12 @@
             display: block;
         }
 
-        /* --- Подвал и ссылки --- */
+        /* --- Подвал --- */
         .legal-links {
             margin-top: 40px;
             font-size: 13px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1s forwards;
         }
         .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; }
 
@@ -197,38 +211,35 @@
         }
         .footer-version { color: #f1c40f; opacity: 0.7; }
 
-        /* --- Адаптивность --- */
         @media (max-width: 600px) {
             .menu-button { width: 100%; }
-            .header-container { align-self: center; }
-            h1 { font-size: 1.4em; }
+            .header-container { align-self: center; margin-top: 20px; }
+            h1 { font-size: 1.6em; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar"></div>
-
     <div class="header-container">
         <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Логотип MixQZero">
-        <h1>Project MixQZero</h1>
+        <h1>MixQZero</h1>
     </div>
 
     <div class="menu-container">
 
-        <h2>Мини-проекты</h2>
+        <h2>Некрупные проекты</h2>
         <div class="menu-row">
-            <a href="https://mixqzero.github.io/case" class="menu-button">Кейс</a>
-            <a href="https://mixqzero.github.io/random" class="menu-button">Рандомайзер</a>
+            <a href="https://mixqzero.github.io/case" class="menu-button btn-1">Кейс</a>
+            <a href="https://mixqzero.github.io/random" class="menu-button btn-2">Рандомайзер</a>
         </div>
 
         <h2>Информация и поддержка</h2>
         <div class="menu-row">
-            <a href="https://t.me/mixqzero" class="menu-button">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
-            <a href="https://t.me/mixqzerobot" class="menu-button">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
+            <a href="https://t.me/mixqzero" class="menu-button btn-3">Телеграмм канал<span class="support-text-support">Новости проекта</span></a>
+            <a href="https://t.me/mixqzerobot" class="menu-button btn-4">Телеграмм бот<span class="support-text-support">Техподдержка 24/7</span></a>
         </div>
         <div class="menu-row">
-            <a href="https://t.me/kqxsrZ" class="menu-button">Связаться с разработчиком</a>
+            <a href="https://t.me/kqxsrZ" class="menu-button btn-5">Связаться с разработчиком</a>
         </div>
     </div>
 
@@ -242,10 +253,5 @@
         <span class="footer-version">ver. web4Global</span>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("MixQZero UI Loaded");
-        });
-    </script>
 </body>
 </html>
