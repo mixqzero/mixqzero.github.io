@@ -51,13 +51,13 @@
             margin: 0;
             box-sizing: border-box;
             position: relative;
-            padding-bottom: 120px; /* Увеличили отступ для нижних элементов */
+            padding-bottom: 120px;
         }
 
-        /* --- Заголовок (Теперь всегда по центру) --- */
+        /* --- Заголовок --- */
         .header-container {
             display: flex;
-            flex-direction: column; /* Элементы друг под другом для лучшего центра */
+            flex-direction: column;
             align-items: center;
             margin-top: 40px;
             margin-bottom: 40px;
@@ -66,29 +66,31 @@
         }
 
         .header-container img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px; /* Отступ снизу вместо правого */
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            width: 65px;
+            height: 65px;
+            margin-bottom: 15px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         h1 {
             color: #fff;
             margin: 0;
-            font-size: 2.2em;
+            font-size: 2.5em;
             font-family: 'Arial Black', sans-serif;
-            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
         h2 {
             font-size: 1.1em;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            color: rgba(255, 255, 255, 0.9);
-            border-bottom: 2px solid #f1c40f; /* Линия снизу для симметрии по центру */
+            letter-spacing: 3px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #f1c40f;
+            text-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+            border-bottom: 2px solid rgba(241, 196, 15, 0.5);
             padding-bottom: 8px;
             width: fit-content;
             opacity: 0;
@@ -101,7 +103,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 700px;
+            max-width: 900px;
         }
 
         .menu-row {
@@ -121,74 +123,60 @@
             align-items: center;
             justify-content: center;
             width: 280px;
-            padding: 18px 25px;
+            padding: 20px 25px;
             text-decoration: none;
             color: #fff;
             font-weight: 600;
             font-size: 1.1em;
             text-align: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
             backdrop-filter: blur(15px) saturate(160%);
             -webkit-backdrop-filter: blur(15px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 4px 4px rgba(255, 255, 255, 0.2);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 4px 4px rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
             opacity: 0;
             animation: fadeInUp 0.6s ease-out forwards;
         }
 
         /* Задержки анимации */
-        .btn-1 { animation-delay: 0.5s; }
-        .btn-2 { animation-delay: 0.6s; }
-        .btn-3 { animation-delay: 0.7s; }
-        .btn-4 { animation-delay: 0.8s; }
-        .btn-5 { animation-delay: 0.9s; }
+        .btn-1 { animation-delay: 0.4s; }
+        .btn-2 { animation-delay: 0.5s; }
+        .btn-3 { animation-delay: 0.6s; }
+        .btn-4 { animation-delay: 0.7s; }
+        .btn-5 { animation-delay: 0.8s; }
 
         .menu-button::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+            top: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
             pointer-events: none;
         }
 
-        .menu-button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -150%;
-            width: 150%;
-            height: 200%;
-            background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: rotate(30deg);
-            transition: 0.8s;
-        }
-
         .menu-button:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-7px);
             background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 45px rgba(241, 196, 15, 0.2);
-            border-color: rgba(241, 196, 15, 0.5);
+            box-shadow: 0 15px 45px rgba(241, 196, 15, 0.25);
+            border-color: rgba(241, 196, 15, 0.6);
         }
 
-        .menu-button:hover::after {
-            left: 150%;
+        .menu-button:active {
+            transform: scale(0.95); /* Эффект нажатия */
         }
 
         .support-text-support {
             font-size: 0.75em;
             color: #f1c40f;
-            margin-top: 5px;
+            margin-top: 6px;
             font-weight: normal;
             display: block;
+            opacity: 0.9;
         }
 
-        /* --- Нижняя часть (Ссылки и Футер) --- */
+        /* --- Нижняя часть --- */
         .bottom-section {
             margin-top: auto;
             display: flex;
@@ -196,6 +184,7 @@
             align-items: center;
             gap: 15px;
             padding-bottom: 20px;
+            width: 100%;
         }
 
         .legal-links {
@@ -204,18 +193,20 @@
             animation: fadeInUp 0.8s ease-out 1s forwards;
             text-align: center;
         }
-        .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; margin: 0 5px; }
+        .legal-links a { color: #f1c40f; text-decoration: none; border-bottom: 1px dashed; margin: 0 8px; transition: 0.3s; }
+        .legal-links a:hover { color: #fff; border-bottom-style: solid; }
 
         footer {
             text-align: center;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 12px;
+            letter-spacing: 0.5px;
         }
-        .footer-version { color: #f1c40f; opacity: 0.7; display: block; margin-top: 5px; }
+        .footer-version { color: #f1c40f; opacity: 0.6; display: block; margin-top: 5px; font-weight: bold; }
 
         @media (max-width: 600px) {
-            .menu-button { width: 100%; }
-            h1 { font-size: 1.8em; }
+            .menu-button { width: 90%; }
+            h1 { font-size: 2em; }
         }
     </style>
 </head>
@@ -232,7 +223,7 @@
         <div class="menu-row">
             <a href="https://mixqzero.github.io/case" class="menu-button btn-1">Кейс</a>
             <a href="https://mixqzero.github.io/random" class="menu-button btn-2">Рандомайзер</a>
-            <a href="https://t.me/mixqzeroaibot" class="menu-button btn-3">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
+            <a href="https://t.me/mixqzeroai_bot" class="menu-button btn-3">ИИ от MixQZero<span class="support-text-support">Нейросеть</span></a>
         </div>
 
         <h2>Информация и поддержка</h2>
