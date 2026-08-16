@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MixQZero - Главная</title>
     <style>
-        /* ==========================================================================
-           1. Базовые Стили
-           ========================================================================== */
         :root {
             --bg-gradient: linear-gradient(-45deg, #12002b, #2a0845, #6a1b9a, #11001c);
             --btn-bg: rgba(255, 255, 255, 0.07);
@@ -37,16 +34,10 @@
         }
         body.static-bg { animation: none !important; background-size: cover; }
 
-        /* ==========================================================================
-           2. Космические Эффекты Фон
-           ========================================================================== */
         #space-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; }
         #distortion-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 2; backdrop-filter: blur(0px); transition: backdrop-filter 0.3s; }
-        .settings-trigger, .settings-panel, .header-container, .warning-banner, .section-wrapper { z-index: 10; position: relative; }
+        .settings-trigger, .settings-panel, .header-container, .section-wrapper { z-index: 10; position: relative; }
 
-        /* ==========================================================================
-           3. Анимации
-           ========================================================================== */
         @keyframes purpleGoldGradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -57,9 +48,6 @@
         @keyframes glitch-skew { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); filter: hue-rotate(-90deg); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); } }
         @keyframes liquidBorder { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
 
-        /* ==========================================================================
-           4. Настройки
-           ========================================================================== */
         .settings-trigger { position: fixed; top: 20px; left: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; z-index: 1100; background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 50px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); transition: 0.3s; min-width: 44px; min-height: 44px; }
         .settings-trigger:hover { box-shadow: 0 0 20px var(--glow-color); border-color: var(--accent-solid); }
         .settings-panel { position: fixed; top: 0; left: 0; width: 300px; height: 100%; background: var(--panel-bg); backdrop-filter: blur(25px); z-index: 1050; transform: translateX(-101%); transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); padding: 80px 25px 40px; display: flex; flex-direction: column; box-shadow: 10px 0 50px rgba(0,0,0,0.8); box-sizing: border-box; border-right: 1px solid rgba(255, 255, 255, 0.1); }
@@ -69,31 +57,10 @@
         .switch-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 12px; border-radius: 12px; cursor: pointer; transition: 0.2s; text-align: left; }
         .switch-btn.active { background: var(--accent-solid); color: #000; font-weight: bold; border-color: var(--accent-solid); box-shadow: 0 0 15px var(--glow-color); }
 
-        /* ==========================================================================
-           5. Контент и Текст
-           ========================================================================== */
         .header-container { display: flex; flex-direction: column; align-items: center; margin: 60px 0 30px; animation: fadeInDown 1s ease-out forwards; }
         .header-container img { width: 80px; border-radius: 22px; margin-bottom: 15px; box-shadow: 0 0 30px var(--glow-color); animation: floatLogo 4s ease-in-out infinite; }
         h1 { font-size: 2.8em; font-family: 'Arial Black', sans-serif; margin: 0; background: linear-gradient(90deg, #ffffff 0%, var(--accent-solid) 50%, #ffffff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px var(--accent-solid)); animation: textShimmer 4s linear infinite; }
 
-        /* ==========================================================================
-           6. Предупреждающая табличка
-           ========================================================================== */
-        .warning-banner { display: flex; flex-direction: column; align-items: center; gap: 15px; background: rgba(231, 76, 60, 0.18); border: 1px solid rgba(231, 76, 60, 0.4); backdrop-filter: blur(15px); border-radius: 18px; padding: 22px; max-width: 800px; width: 100%; box-sizing: border-box; margin-bottom: 35px; animation: fadeInUp 0.8s ease-out forwards; box-shadow: 0 8px 32px 0 rgba(231, 76, 60, 0.25); transition: opacity 0.4s ease, transform 0.4s ease; }
-        .warning-banner.hidden-warning { opacity: 0; transform: translateY(-20px); pointer-events: none; position: absolute; visibility: hidden; }
-        .warning-top { display: flex; align-items: center; gap: 15px; width: 100%; }
-        .warning-icon { font-size: 1.5em; flex-shrink: 0; user-select: none; filter: drop-shadow(0 0 8px rgba(231, 76, 60, 0.8)); }
-        .warning-text { font-size: 0.88em; line-height: 1.5; text-align: center; color: #ffffff; }
-        .warning-actions { display: flex; gap: 12px; margin-top: 5px; flex-wrap: wrap; justify-content: center; }
-        .warn-btn { padding: 8px 20px; border-radius: 10px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.5px; }
-        .warn-btn-close { background: rgba(255,255,255,0.08); color: #fff; }
-        .warn-btn-close:hover { background: rgba(255,255,255,0.15); }
-        .warn-btn-never { background: rgba(231, 76, 60, 0.25); color: #ffcccc; border-color: rgba(231, 76, 60, 0.4); }
-        .warn-btn-never:hover { background: rgba(231, 76, 60, 0.4); color: #fff; }
-
-        /* ==========================================================================
-           7. Секции и Кнопки
-           ========================================================================== */
         .section-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 900px; margin-bottom: 40px; }
         h2 { font-size: 1.1em; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-solid); border-bottom: 2px solid rgba(241, 196, 15, 0.4); padding-bottom: 10px; margin-bottom: 25px; opacity: 0; animation: fadeInUp 0.8s ease-out 0.5s forwards; text-shadow: 0 0 10px rgba(241, 196, 15, 0.5); }
         .buttons-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; width: 100%; perspective: 1000px; }
@@ -103,31 +70,17 @@
         .menu-button:hover::after { opacity: 1; animation: liquidBorder 2s linear infinite; }
         .menu-button:active { transform: translateY(2px) scale(0.98); box-shadow: 0 5px 10px rgba(0,0,0,0.4); transition: transform 0.1s; }
 
-        /* ==========================================================================
-           8. Внутренности настроек
-           ========================================================================== */
         .settings-footer { margin-top: auto; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.15); }
-        .http-badge { display: flex; align-items: center; gap: 8px; background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.3); border-radius: 10px; padding: 10px 14px; margin-bottom: 15px; font-size: 11px; color: #2ecc71; letter-spacing: 0.5px; line-height: 1.4; }
-        .http-badge-icon { font-size: 14px; flex-shrink: 0; }
         .status-badge { display: flex; align-items: center; font-size: 11px; color: #2ecc71; margin-bottom: 15px; letter-spacing: 1px; font-weight: bold; }
         .status-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; margin-right: 8px; animation: pulseStatus 2s infinite; }
         footer { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.4; }
 
-        /* ==========================================================================
-           9. Адаптивность
-           ========================================================================== */
         @media (max-width: 600px) {
             .settings-trigger span { display: none; }
             .settings-panel { width: 85%; }
             .menu-button { width: 100%; }
-            .warning-top { flex-direction: column; text-align: center; }
-            .warning-actions { width: 100%; }
-            .warn-btn { flex: 1; text-align: center; }
         }
 
-        /* ==========================================================================
-           🔥 ДОПОЛНИТЕЛЬНЫЕ ФИЧИ
-           ========================================================================== */
         #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050508; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s; }
         .loader-ring { width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent-solid); border-radius: 50%; animation: spin 1s linear infinite; }
         #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -144,13 +97,11 @@
     <canvas id="space-canvas"></canvas>
     <div id="distortion-layer"></div>
 
-    <!-- Триггер настроек -->
     <div class="settings-trigger" onclick="toggleSettings();">
         <svg style="width:22px; height:22px; fill:white;" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
         <span id="trigger-text">Настройки</span>
     </div>
 
-    <!-- Панель настроек -->
     <div class="settings-panel" id="settingsPanel">
         <div class="setting-item">
             <label>Тема</label>
@@ -163,10 +114,6 @@
             <button class="switch-btn" id="animOffBtn" onclick="setAnim(false);">Статичный</button>
         </div>
         <div class="settings-footer">
-            <div class="http-badge">
-                <span class="http-badge-icon">🔒</span>
-                <span>Протокол HTTP, но соединение защищено</span>
-            </div>
             <div class="status-badge">
                 <div class="status-dot"></div>
                 System Status: Online
@@ -175,29 +122,11 @@
         </div>
     </div>
 
-    <!-- Хедер -->
     <div class="header-container" id="parallax-header">
         <img src="https://i.postimg.cc/s2yDfZKf/Picsart-25-04-23-11-46-48-965.png" alt="Logo">
         <h1 class="glitch-hover">MixQZero</h1>
     </div>
 
-    <!-- Предупреждение -->
-    <div class="warning-banner" id="warningBanner">
-        <div class="warning-top">
-            <span class="warning-icon">❗</span>
-            <div class="warning-text">
-                <strong>Уважаемые пользователи!</strong><br><br>
-                Предупреждение браузера о незащищённом соединении вызвано исключительно использованием протокола HTTP ввиду отсутствия сертификата TLS для домена mqz.l.cd. Это техническая особенность, а не признак угрозы. Работа сайта осуществляется штатно, риски утечки данных отсутствуют. Просим не предпринимать мер по ограничению доступа к ресурсу.
-            </div>
-            <span class="warning-icon">❗</span>
-        </div>
-        <div class="warning-actions">
-            <button class="warn-btn warn-btn-close" onclick="closeWarningTemp()">Закрыть</button>
-            <button class="warn-btn warn-btn-never" onclick="closeWarningForever()">Больше не показывать</button>
-        </div>
-    </div>
-
-    <!-- 🔥 НОВАЯ КАТЕГОРИЯ: НЕЙРОСЕТЬ -->
     <div class="section-wrapper">
         <h2>Нейросеть</h2>
         <div class="buttons-grid">
@@ -206,7 +135,6 @@
         </div>
     </div>
 
-    <!-- МИНИ-ПРОЕКТЫ (остался только Рандомайзер) -->
     <div class="section-wrapper">
         <h2>Мини-проекты</h2>
         <div class="buttons-grid">
@@ -214,7 +142,6 @@
         </div>
     </div>
 
-    <!-- Секция Информация -->
     <div class="section-wrapper">
         <h2>Информация</h2>
         <div class="buttons-grid" id="info-grid">
@@ -223,29 +150,10 @@
     </div>
 
     <script>
-        // ==========================================================================
-        // ЛОГИКА ПРЕДУПРЕЖДЕНИЯ
-        // ==========================================================================
-        const warningBanner = document.getElementById('warningBanner');
-        if (localStorage.getItem('hideWarningForever') === 'true') {
-            warningBanner.classList.add('hidden-warning');
-        }
-        function closeWarningTemp() { warningBanner.classList.add('hidden-warning'); }
-        function closeWarningForever() {
-            localStorage.setItem('hideWarningForever', 'true');
-            warningBanner.classList.add('hidden-warning');
-        }
-
-        // ==========================================================================
-        // PRELOADER
-        // ==========================================================================
         window.addEventListener('load', () => {
             setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 600);
         });
 
-        // ==========================================================================
-        // SPOTLIGHT EFFECT
-        // ==========================================================================
         document.querySelectorAll('.menu-button').forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
@@ -256,9 +164,6 @@
             });
         });
 
-        // ==========================================================================
-        // PARALLAX HEADER
-        // ==========================================================================
         const parallaxHeader = document.getElementById('parallax-header');
         document.addEventListener('mousemove', (e) => {
             const x = (window.innerWidth - e.pageX * 2) / 90;
@@ -266,9 +171,6 @@
             if (parallaxHeader) parallaxHeader.style.transform = `translate(${x}px, ${y}px)`;
         });
 
-        // ==========================================================================
-        // НАСТРОЙКИ
-        // ==========================================================================
         document.addEventListener('DOMContentLoaded', () => {
             setTheme(localStorage.getItem('theme') || 'light', false);
             setAnim(localStorage.getItem('anim') !== 'false', false);
@@ -301,9 +203,6 @@
             if (!p.contains(e.target) && !t.contains(e.target) && p.classList.contains('active')) toggleSettings();
         });
 
-        // ==========================================================================
-        // STAGGERED ANIMATION
-        // ==========================================================================
         function startStaggeredAnimation() {
             document.querySelectorAll('.menu-button').forEach((btn, i) => {
                 btn.style.animation = `fadeInUp 0.6s ease-out forwards`;
@@ -311,9 +210,6 @@
             });
         }
 
-        // ==========================================================================
-        // SPACE CANVAS
-        // ==========================================================================
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
         const distortionLayer = document.getElementById('distortion-layer');
@@ -343,9 +239,6 @@
         function animateSpace() { ctx.clearRect(0,0,width,height); stars.forEach(s=>{s.update();s.draw();}); meteors.forEach(m=>{m.update();m.draw();}); requestAnimationFrame(animateSpace); }
         animateSpace();
 
-        // ==========================================================================
-        // DISTORTION ON HOVER
-        // ==========================================================================
         document.querySelectorAll('.menu-button').forEach(btn => {
             btn.addEventListener('mousemove', () => { distortionLayer.style.backdropFilter = 'blur(4px)'; });
             btn.addEventListener('mouseleave', () => { distortionLayer.style.backdropFilter = 'blur(0px)'; });
